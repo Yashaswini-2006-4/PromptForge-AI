@@ -8,7 +8,7 @@ An AI-powered Chrome Extension Generator that transforms natural language prompt
 
 ## 🌐 Live Demo
 
-**Frontend:** https:prompt-forge-ai-green.vercel.app
+**Frontend:** https://prompt-forge-ai-green.vercel.app
 
 **Backend API:** https://promptforge-ai-n5xv.onrender.com
 
@@ -160,7 +160,7 @@ npm run dev
 
 # 👩‍💻 Author
 
-**Yashavanth**
+**Yashaswini**
 
 GitHub:
 https://github.com/Yashaswini-2006-4
