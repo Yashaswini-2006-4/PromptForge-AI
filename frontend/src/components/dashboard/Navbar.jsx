@@ -1,8 +1,18 @@
+import { useState } from "react";
 import SearchBar from "./SearchBar";
+import NotificationButton from "./NotificationButton";
+import NotificationPanel from "./NotificationPanel";
+import ProfileDropdown from "./ProfileDropdown";
 import useAuth from "../../hooks/useAuth";
 
 export default function Navbar() {
   const { user } = useAuth();
+
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+
+  // Temporary data (later from MongoDB)
+  const notifications = [];
 
   return (
     <header className="flex items-center justify-between mb-8">
@@ -13,47 +23,58 @@ export default function Navbar() {
         </h1>
 
         <p className="text-zinc-400 mt-1">
-          Welcome back, {user?.fullName} 👋
+          Welcome back, {user?.fullName || "User"} 👋
         </p>
       </div>
 
       {/* Right */}
-      <div className="flex items-center gap-5">
-
+      <div className="relative flex items-center gap-5">
         <SearchBar />
 
-        <button
-          className="
-            w-11
-            h-11
-            rounded-xl
-            bg-zinc-900
-            border
-            border-zinc-800
-            hover:border-violet-500
-            transition
-          "
-        >
-          🔔
-        </button>
+        {/* Notifications */}
+        <div className="relative">
+          <NotificationButton
+            count={notifications.length}
+            onClick={() => {
+              setOpenNotifications(!openNotifications);
+              setOpenProfile(false);
+            }}
+          />
 
-        <div
-          className="
-            w-11
-            h-11
-            rounded-full
-            bg-violet-600
-            flex
-            items-center
-            justify-center
-            text-white
-            font-semibold
-            text-lg
-          "
-        >
-          {user?.fullName?.charAt(0).toUpperCase()}
+          <NotificationPanel
+            open={openNotifications}
+            notifications={notifications}
+          />
         </div>
 
+        {/* Profile */}
+        <div className="relative">
+          <div
+            onClick={() => {
+              setOpenProfile(!openProfile);
+              setOpenNotifications(false);
+            }}
+            className="
+              w-11
+              h-11
+              rounded-full
+              bg-violet-600
+              flex
+              items-center
+              justify-center
+              text-white
+              font-semibold
+              text-lg
+              cursor-pointer
+              hover:scale-105
+              transition
+            "
+          >
+            {user?.fullName?.charAt(0).toUpperCase() || "U"}
+          </div>
+
+          <ProfileDropdown open={openProfile} />
+        </div>
       </div>
     </header>
   );

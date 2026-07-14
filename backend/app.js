@@ -6,6 +6,8 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const extensionRoutes = require("./routes/extensionRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 dotenv.config();
 
@@ -25,5 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/extensions", extensionRoutes);
+app.use("/api/ai", aiRoutes);
 
 module.exports = app;

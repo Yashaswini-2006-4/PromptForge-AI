@@ -1,6 +1,7 @@
 import {
   LayoutDashboard,
   Sparkles,
+  FolderOpen,
   LayoutTemplate,
   Users,
   User,
@@ -17,6 +18,11 @@ const dashboardMenu = [
     title: "Generate",
     path: "/generate",
     icon: Sparkles,
+  },
+  {
+    title: "My Extensions",
+    path: "/extensions",
+    icon: FolderOpen,
   },
   {
     title: "Templates",
