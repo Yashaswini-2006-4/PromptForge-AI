@@ -3,6 +3,12 @@ const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generateToken");
 const { validationResult } = require("express-validator");
 
+/*
+|--------------------------------------------------------------------------
+| Register
+|--------------------------------------------------------------------------
+*/
+
 const registerUser = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -63,6 +69,13 @@ const registerUser = async (req, res) => {
     });
   }
 };
+
+/*
+|--------------------------------------------------------------------------
+| Login
+|--------------------------------------------------------------------------
+*/
+
 const loginUser = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -114,14 +127,61 @@ const loginUser = async (req, res) => {
     });
   }
 };
+
+/*
+|--------------------------------------------------------------------------
+| Get Current User
+|--------------------------------------------------------------------------
+*/
+
 const getMe = async (req, res) => {
   res.status(200).json({
     success: true,
     user: req.user,
   });
 };
+
+/*
+|--------------------------------------------------------------------------
+| Update Profile
+|--------------------------------------------------------------------------
+*/
+
+const updateProfile = async (req, res) => {
+  try {
+    const { fullName, username, email } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    user.fullName = fullName || user.fullName;
+    user.username = username || user.username;
+    user.email = email || user.email;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully.",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
+  updateProfile,
 };

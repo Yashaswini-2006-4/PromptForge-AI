@@ -10,7 +10,7 @@ const getDashboardStats = async (req, res) => {
 
     const totalPublished = await Extension.countDocuments({
       owner: userId,
-      published: true,
+      status: "published",
     });
 
     const extensions = await Extension.find({
@@ -18,20 +18,23 @@ const getDashboardStats = async (req, res) => {
     });
 
     const totalDownloads = extensions.reduce(
-      (sum, ext) => sum + ext.downloads,
+      (sum, extension) => sum + (extension.downloads || 0),
       0
     );
 
-    res.json({
+    res.status(200).json({
       success: true,
       stats: {
         extensions: totalExtensions,
         aiGenerations: totalExtensions,
-        published: totalPublished,
         downloads: totalDownloads,
+        published: totalPublished,
       },
     });
+
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       success: false,
       message: error.message,

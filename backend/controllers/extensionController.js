@@ -19,18 +19,46 @@ const createExtension = async (req, res) => {
       });
     }
 
+    const {
+      title,
+      description,
+      prompt,
+      version,
+      files,
+      status,
+      visibility,
+      tags,
+    } = req.body;
+
+    if (!files || !Array.isArray(files) || files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Extension files are required.",
+      });
+    }
+
     const extension = await Extension.create({
-      ...req.body,
+      title,
+      description,
+      prompt,
+      version,
+      files,
+      status,
+      visibility,
+      tags,
       owner: req.user._id,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "Extension created successfully",
+      message: "Extension saved successfully.",
       extension,
     });
+
   } catch (error) {
-    res.status(500).json({
+    console.error(error);
+
+    return res.status(500).json({
       success: false,
       message: error.message,
     });

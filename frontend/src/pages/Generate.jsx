@@ -1,10 +1,16 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 import WorkspaceLayout from "../layouts/WorkspaceLayout";
 import FileExplorer from "../components/generate/FileExplorer";
 import CodeEditor from "../components/generate/CodeEditor";
 import PreviewPanel from "../components/generate/PreviewPanel";
 import useGenerateExtension from "../hooks/useGenerateExtension";
-import { downloadExtension } from "../services/extensionService";
+
+import {
+  downloadExtension,
+  saveExtension,
+} from "../services/extensionService";
 
 export default function Generate() {
   const [prompt, setPrompt] = useState("");
@@ -20,7 +26,7 @@ export default function Generate() {
 
   const generate = async () => {
     if (!prompt.trim()) {
-      alert("Please enter a prompt.");
+      toast.error("Please enter a prompt.");
       return;
     }
 
@@ -30,8 +36,28 @@ export default function Generate() {
       if (data?.files?.length > 0) {
         setSelectedFile(data.files[0]);
       }
+
+      toast.success("Extension generated successfully!");
     } catch (err) {
       console.error(err);
+      toast.error("Failed to generate extension.");
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await saveExtension({
+        title: extension.title,
+        description: extension.description,
+        prompt,
+        version: extension.version,
+        files,
+      });
+
+      toast.success("Extension saved successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to save extension.");
     }
   };
 
@@ -41,9 +67,11 @@ export default function Generate() {
         title: extension?.title,
         files,
       });
+
+      toast.success("ZIP downloaded successfully!");
     } catch (err) {
       console.error(err);
-      alert("Failed to download ZIP.");
+      toast.error("Failed to download ZIP.");
     }
   };
 
@@ -52,6 +80,7 @@ export default function Generate() {
       <div className="flex flex-col gap-6">
 
         {/* Header */}
+
         <div>
           <h1 className="text-3xl font-bold text-white">
             AI Extension Generator
@@ -63,6 +92,7 @@ export default function Generate() {
         </div>
 
         {/* Prompt */}
+
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
 
           <textarea
@@ -105,21 +135,39 @@ export default function Generate() {
             </button>
 
             {files.length > 0 && (
-              <button
-                onClick={handleDownload}
-                className="
-                  px-8
-                  py-3
-                  rounded-xl
-                  bg-green-600
-                  hover:bg-green-500
-                  transition
-                  text-white
-                  font-semibold
-                "
-              >
-                Download ZIP
-              </button>
+              <>
+                <button
+                  onClick={handleSave}
+                  className="
+                    px-8
+                    py-3
+                    rounded-xl
+                    bg-blue-600
+                    hover:bg-blue-500
+                    transition
+                    text-white
+                    font-semibold
+                  "
+                >
+                  💾 Save Extension
+                </button>
+
+                <button
+                  onClick={handleDownload}
+                  className="
+                    px-8
+                    py-3
+                    rounded-xl
+                    bg-green-600
+                    hover:bg-green-500
+                    transition
+                    text-white
+                    font-semibold
+                  "
+                >
+                  📦 Download ZIP
+                </button>
+              </>
             )}
 
           </div>

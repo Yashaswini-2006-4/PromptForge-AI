@@ -13,10 +13,13 @@ export default function Profile() {
       <Navbar />
 
       <div className="grid lg:grid-cols-3 gap-8">
+
         {/* Left Card */}
+
         <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex flex-col items-center">
+
           <div className="w-28 h-28 rounded-full bg-violet-600 flex items-center justify-center text-5xl font-bold text-white">
-            {user?.fullName?.charAt(0).toUpperCase() || "U"}
+            {user?.fullName?.trim()?.charAt(0)?.toUpperCase() || "U"}
           </div>
 
           <h2 className="mt-6 text-2xl font-bold text-white">
@@ -37,15 +40,19 @@ export default function Profile() {
           >
             Edit Profile
           </button>
+
         </div>
 
         {/* Right Card */}
+
         <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+
           <h2 className="text-2xl font-bold text-white mb-8">
             Account Information
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
+
             <InfoCard
               title="Full Name"
               value={user?.fullName}
@@ -70,38 +77,39 @@ export default function Profile() {
               title="Joined"
               value={
                 user?.createdAt
-                  ? new Date(user.createdAt).toLocaleDateString()
+                  ? new Date(user.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
                   : "-"
               }
             />
 
-            <InfoCard
-              title="User ID"
-              value={user?._id || user?.id}
-            />
           </div>
 
           <h2 className="text-2xl font-bold text-white mt-12 mb-6">
-            Your Statistics
+            Account Status
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
+
             <StatCard
-              title="Extensions"
-              value="0"
+              title="Role"
+              value={user?.role || "User"}
             />
 
             <StatCard
-              title="Templates"
-              value="0"
+              title="Status"
+              value="Active"
             />
 
-            <StatCard
-              title="AI Generations"
-              value="0"
-            />
           </div>
+
         </div>
+
       </div>
 
       <EditProfileModal
@@ -109,6 +117,7 @@ export default function Profile() {
         onClose={() => setOpenModal(false)}
         user={user}
       />
+
     </DashboardLayout>
   );
 }
@@ -116,6 +125,7 @@ export default function Profile() {
 function InfoCard({ title, value }) {
   return (
     <div className="bg-zinc-800 rounded-2xl p-5">
+
       <p className="text-zinc-400 text-sm">
         {title}
       </p>
@@ -123,6 +133,7 @@ function InfoCard({ title, value }) {
       <p className="text-white font-semibold mt-2 break-all">
         {value}
       </p>
+
     </div>
   );
 }
@@ -130,6 +141,7 @@ function InfoCard({ title, value }) {
 function StatCard({ title, value }) {
   return (
     <div className="bg-zinc-800 rounded-2xl p-6 text-center">
+
       <p className="text-4xl font-bold text-violet-400">
         {value}
       </p>
@@ -137,6 +149,7 @@ function StatCard({ title, value }) {
       <p className="text-zinc-400 mt-3">
         {title}
       </p>
+
     </div>
   );
 }

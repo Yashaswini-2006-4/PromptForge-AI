@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { updateProfile } from "../../services/authService";
 
 export default function EditProfileModal({
   open,
@@ -10,6 +12,8 @@ export default function EditProfileModal({
     username: "",
     email: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -24,23 +28,39 @@ export default function EditProfileModal({
   if (!open) return null;
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(form);
+    try {
+      setLoading(true);
 
-    onClose();
+      await updateProfile(form);
+
+      toast.success("Profile updated successfully!");
+
+      onClose();
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+  error.response?.data?.message ||
+    "Failed to update profile."
+    );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999]">
-
       <div className="w-full max-w-xl bg-zinc-900 rounded-3xl border border-zinc-800 p-8">
 
         <h2 className="text-2xl font-bold text-white">
@@ -103,9 +123,10 @@ export default function EditProfileModal({
 
             <button
               type="submit"
-              className="px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white"
+              disabled={loading}
+              className="px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white"
             >
-              Save Changes
+              {loading ? "Saving..." : "Save Changes"}
             </button>
 
           </div>
@@ -113,7 +134,6 @@ export default function EditProfileModal({
         </form>
 
       </div>
-
     </div>
   );
 }

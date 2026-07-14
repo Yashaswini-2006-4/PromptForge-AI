@@ -7,6 +7,12 @@ export default function useGenerateExtension() {
   const [files, setFiles] = useState([]);
   const [error, setError] = useState("");
 
+  /*
+  |--------------------------------------------------------------------------
+  | Generate New Extension
+  |--------------------------------------------------------------------------
+  */
+
   const handleGenerate = async (prompt) => {
     try {
       setLoading(true);
@@ -29,11 +35,43 @@ export default function useGenerateExtension() {
     }
   };
 
+  /*
+  |--------------------------------------------------------------------------
+  | Load Saved Extension
+  |--------------------------------------------------------------------------
+  */
+
+  const loadExtension = (savedExtension) => {
+    setExtension({
+      title: savedExtension.title,
+      description: savedExtension.description,
+      version: savedExtension.version,
+    });
+
+    setFiles(savedExtension.files || []);
+  };
+
+  /*
+  |--------------------------------------------------------------------------
+  | Reset Workspace
+  |--------------------------------------------------------------------------
+  */
+
+  const resetExtension = () => {
+    setExtension(null);
+    setFiles([]);
+    setError("");
+  };
+
   return {
     loading,
     error,
+
     extension,
     files,
+
     handleGenerate,
+    loadExtension,
+    resetExtension,
   };
 }

@@ -1,5 +1,23 @@
 const mongoose = require("mongoose");
 
+const fileSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    content: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    _id: false,
+  }
+);
+
 const extensionSchema = new mongoose.Schema(
   {
     title: {
@@ -18,19 +36,14 @@ const extensionSchema = new mongoose.Schema(
       required: true,
     },
 
-    generatedCode: {
+    version: {
       type: String,
-      default: "",
+      default: "1.0.0",
     },
 
-    manifestJson: {
-      type: String,
-      default: "",
-    },
-
-    icon: {
-      type: String,
-      default: "",
+    files: {
+      type: [fileSchema],
+      default: [],
     },
 
     status: {
@@ -45,16 +58,10 @@ const extensionSchema = new mongoose.Schema(
       default: "private",
     },
 
-    version: {
-      type: String,
-      default: "1.0.0",
+    tags: {
+      type: [String],
+      default: [],
     },
-
-    tags: [
-      {
-        type: String,
-      },
-    ],
 
     downloads: {
       type: Number,
