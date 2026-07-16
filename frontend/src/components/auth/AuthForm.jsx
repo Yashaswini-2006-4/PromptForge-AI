@@ -26,7 +26,7 @@ export default function AuthForm({
             name="fullName"
             value={form.fullName}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder="Enter your full name"
           />
 
           <Input
@@ -34,7 +34,7 @@ export default function AuthForm({
             name="username"
             value={form.username}
             onChange={handleChange}
-            placeholder="john_doe"
+            placeholder="Enter your username"
           />
         </>
       )}
@@ -45,17 +45,23 @@ export default function AuthForm({
         name="email"
         value={form.email}
         onChange={handleChange}
-        placeholder="john@gmail.com"
+        placeholder="Enter your email"
       />
 
-      <Input
-        label="Password"
-        type="password"
-        name="password"
-        value={form.password}
-        onChange={handleChange}
-        placeholder="••••••••"
-      />
+      <div>
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+        />
+
+        <p className="mt-2 text-xs text-gray-400">
+          Password must be at least 8 characters long.
+        </p>
+      </div>
 
       <Button type="submit" disabled={loading}>
         {loading ? <Loader /> : isRegister ? "Create Account" : "Login"}
