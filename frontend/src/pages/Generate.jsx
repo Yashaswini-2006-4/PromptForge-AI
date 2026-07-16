@@ -80,23 +80,21 @@ export default function Generate() {
       <div className="flex flex-col gap-6">
 
         {/* Header */}
-
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
             AI Extension Generator
           </h1>
 
-          <p className="text-zinc-400 mt-2">
+          <p className="text-zinc-400 mt-2 text-sm sm:text-base">
             Describe your Chrome Extension and let PromptForge build it.
           </p>
         </div>
 
         {/* Prompt */}
-
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 sm:p-6">
 
           <textarea
-            rows={7}
+            rows={5}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Example: Build a Chrome Extension that summarizes YouTube videos using AI."
@@ -114,13 +112,15 @@ export default function Generate() {
             "
           />
 
-          <div className="flex items-center gap-4 mt-6">
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
 
             <button
               onClick={generate}
               disabled={loading}
               className="
-                px-8
+                w-full
+                sm:w-auto
+                px-6
                 py-3
                 rounded-xl
                 bg-violet-600
@@ -139,7 +139,9 @@ export default function Generate() {
                 <button
                   onClick={handleSave}
                   className="
-                    px-8
+                    w-full
+                    sm:w-auto
+                    px-6
                     py-3
                     rounded-xl
                     bg-blue-600
@@ -155,7 +157,9 @@ export default function Generate() {
                 <button
                   onClick={handleDownload}
                   className="
-                    px-8
+                    w-full
+                    sm:w-auto
+                    px-6
                     py-3
                     rounded-xl
                     bg-green-600
@@ -181,10 +185,9 @@ export default function Generate() {
         </div>
 
         {/* Workspace */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <div className="grid grid-cols-12 gap-6">
-
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <FileExplorer
               files={files}
               selectedFile={selectedFile}
@@ -192,11 +195,11 @@ export default function Generate() {
             />
           </div>
 
-          <div className="col-span-6">
+          <div className="lg:col-span-6">
             <CodeEditor file={selectedFile} />
           </div>
 
-          <div className="col-span-4">
+          <div className="lg:col-span-4">
             <PreviewPanel extension={extension} />
           </div>
 

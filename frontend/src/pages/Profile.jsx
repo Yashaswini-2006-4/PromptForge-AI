@@ -12,25 +12,25 @@ export default function Profile() {
     <DashboardLayout>
       <Navbar />
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {/* Left Card */}
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 flex flex-col items-center">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 flex flex-col items-center">
 
-          <div className="w-28 h-28 rounded-full bg-violet-600 flex items-center justify-center text-5xl font-bold text-white">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-violet-600 flex items-center justify-center text-4xl sm:text-5xl font-bold text-white">
             {user?.fullName?.trim()?.charAt(0)?.toUpperCase() || "U"}
           </div>
 
-          <h2 className="mt-6 text-2xl font-bold text-white">
+          <h2 className="mt-6 text-xl sm:text-2xl font-bold text-white text-center">
             {user?.fullName}
           </h2>
 
-          <p className="text-violet-400 mt-1">
+          <p className="text-violet-400 mt-1 break-all">
             @{user?.username}
           </p>
 
-          <p className="text-zinc-400 mt-4 text-center">
+          <p className="text-zinc-400 mt-4 text-center break-all">
             {user?.email}
           </p>
 
@@ -45,13 +45,13 @@ export default function Profile() {
 
         {/* Right Card */}
 
-        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
 
-          <h2 className="text-2xl font-bold text-white mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-8">
             Account Information
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <InfoCard
               title="Full Name"
@@ -90,11 +90,11 @@ export default function Profile() {
 
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mt-12 mb-6">
             Account Status
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <StatCard
               title="Role"
@@ -142,7 +142,7 @@ function StatCard({ title, value }) {
   return (
     <div className="bg-zinc-800 rounded-2xl p-6 text-center">
 
-      <p className="text-4xl font-bold text-violet-400">
+      <p className="text-3xl sm:text-4xl font-bold text-violet-400 break-all">
         {value}
       </p>
 

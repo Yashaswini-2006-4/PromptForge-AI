@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import dashboardMenu from "../../utils/dashboardMenu";
 import Logo from "../ui/Logo";
+import { X } from "lucide-react";
 
-export default function Sidebar() {
+export default function Sidebar({ closeSidebar }) {
   return (
     <aside
       className="
@@ -15,10 +16,22 @@ export default function Sidebar() {
         flex-col
       "
     >
-      <div className="p-6 border-b border-zinc-800">
+      {/* Header */}
+      <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+
         <Logo />
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={closeSidebar}
+          className="lg:hidden text-white"
+        >
+          <X size={26} />
+        </button>
+
       </div>
 
+      {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
         {dashboardMenu.map((item) => {
           const Icon = item.icon;
@@ -27,6 +40,7 @@ export default function Sidebar() {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={closeSidebar}
               className={({ isActive }) =>
                 `
                 flex

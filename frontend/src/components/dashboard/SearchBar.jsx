@@ -6,7 +6,7 @@ export default function SearchBar({
   placeholder = "Search extensions...",
 }) {
   return (
-    <div className="relative w-80">
+    <div className="relative w-full sm:w-80">
       <Search
         size={18}
         className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"

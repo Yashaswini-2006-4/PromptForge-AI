@@ -64,11 +64,11 @@ export default function MyExtensions() {
       <div className="space-y-8">
 
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
             My Extensions
           </h1>
 
-          <p className="text-zinc-400 mt-2">
+          <p className="text-zinc-400 mt-2 text-sm sm:text-base">
             Manage your saved AI-generated Chrome extensions.
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function MyExtensions() {
             Loading extensions...
           </div>
         ) : extensions.length === 0 ? (
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-12 text-center">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 sm:p-12 text-center">
             <h2 className="text-xl text-white font-semibold">
               No Extensions Yet
             </h2>
@@ -88,7 +88,7 @@ export default function MyExtensions() {
             </p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
             {extensions.map((extension) => (
 
@@ -97,11 +97,11 @@ export default function MyExtensions() {
                 className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-violet-500 transition"
               >
 
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-white break-words">
                   {extension.title}
                 </h2>
 
-                <p className="text-zinc-400 mt-2 line-clamp-3">
+                <p className="text-zinc-400 mt-2 line-clamp-3 break-words">
                   {extension.description}
                 </p>
 
@@ -111,18 +111,18 @@ export default function MyExtensions() {
                   {(extension.files || []).length} files
                 </div>
 
-                <div className="flex gap-3 mt-6">
+                <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
                   <button
                     onClick={() => handleDownload(extension)}
-                    className="flex-1 py-2 rounded-lg bg-green-600 hover:bg-green-500 transition text-white"
+                    className="w-full sm:flex-1 py-2 rounded-lg bg-green-600 hover:bg-green-500 transition text-white"
                   >
                     Download
                   </button>
 
                   <button
                     onClick={() => handleDelete(extension._id)}
-                    className="flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-500 transition text-white"
+                    className="w-full sm:flex-1 py-2 rounded-lg bg-red-600 hover:bg-red-500 transition text-white"
                   >
                     Delete
                   </button>

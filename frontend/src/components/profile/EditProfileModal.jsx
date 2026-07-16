@@ -51,19 +51,33 @@ export default function EditProfileModal({
       console.error(error);
 
       toast.error(
-  error.response?.data?.message ||
-    "Failed to update profile."
-    );
+        error.response?.data?.message ||
+          "Failed to update profile."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999]">
-      <div className="w-full max-w-xl bg-zinc-900 rounded-3xl border border-zinc-800 p-8">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999] p-4">
 
-        <h2 className="text-2xl font-bold text-white">
+      <div
+        className="
+          w-full
+          max-w-xl
+          max-h-[90vh]
+          overflow-y-auto
+          bg-zinc-900
+          rounded-3xl
+          border
+          border-zinc-800
+          p-6
+          sm:p-8
+        "
+      >
+
+        <h2 className="text-xl sm:text-2xl font-bold text-white">
           Edit Profile
         </h2>
 
@@ -73,7 +87,7 @@ export default function EditProfileModal({
         >
 
           <div>
-            <label className="text-zinc-400">
+            <label className="text-zinc-400 text-sm">
               Full Name
             </label>
 
@@ -81,12 +95,24 @@ export default function EditProfileModal({
               name="fullName"
               value={form.fullName}
               onChange={handleChange}
-              className="w-full mt-2 bg-zinc-800 rounded-xl px-4 py-3 text-white outline-none"
+              placeholder="Enter your full name"
+              className="
+                w-full
+                mt-2
+                bg-zinc-800
+                rounded-xl
+                px-4
+                py-3
+                text-white
+                outline-none
+                focus:ring-2
+                focus:ring-violet-500
+              "
             />
           </div>
 
           <div>
-            <label className="text-zinc-400">
+            <label className="text-zinc-400 text-sm">
               Username
             </label>
 
@@ -94,29 +120,64 @@ export default function EditProfileModal({
               name="username"
               value={form.username}
               onChange={handleChange}
-              className="w-full mt-2 bg-zinc-800 rounded-xl px-4 py-3 text-white outline-none"
+              placeholder="Enter your username"
+              className="
+                w-full
+                mt-2
+                bg-zinc-800
+                rounded-xl
+                px-4
+                py-3
+                text-white
+                outline-none
+                focus:ring-2
+                focus:ring-violet-500
+              "
             />
           </div>
 
           <div>
-            <label className="text-zinc-400">
+            <label className="text-zinc-400 text-sm">
               Email
             </label>
 
             <input
+              type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full mt-2 bg-zinc-800 rounded-xl px-4 py-3 text-white outline-none"
+              placeholder="Enter your email"
+              className="
+                w-full
+                mt-2
+                bg-zinc-800
+                rounded-xl
+                px-4
+                py-3
+                text-white
+                outline-none
+                focus:ring-2
+                focus:ring-violet-500
+              "
             />
           </div>
 
-          <div className="flex justify-end gap-4 pt-4">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4">
 
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 rounded-xl bg-zinc-800 text-white"
+              className="
+                w-full
+                sm:w-auto
+                px-6
+                py-3
+                rounded-xl
+                bg-zinc-800
+                text-white
+                hover:bg-zinc-700
+                transition
+              "
             >
               Cancel
             </button>
@@ -124,7 +185,18 @@ export default function EditProfileModal({
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white"
+              className="
+                w-full
+                sm:w-auto
+                px-6
+                py-3
+                rounded-xl
+                bg-violet-600
+                hover:bg-violet-500
+                disabled:opacity-50
+                text-white
+                transition
+              "
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>
@@ -134,6 +206,7 @@ export default function EditProfileModal({
         </form>
 
       </div>
+
     </div>
   );
 }
