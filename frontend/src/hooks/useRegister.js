@@ -22,9 +22,15 @@ export default function useRegister() {
 
       navigate("/dashboard");
     } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Registration failed"
-      );
+      console.error("REGISTER ERROR:", error);
+
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else if (error.response?.data?.errors?.length > 0) {
+        toast.error(error.response.data.errors[0].msg);
+      } else {
+        toast.error("Registration failed");
+      }
     } finally {
       setLoading(false);
     }
